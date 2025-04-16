@@ -12,6 +12,7 @@ const ContactUs: React.FC = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState({ text: '', isError: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -55,6 +56,7 @@ const ContactUs: React.FC = () => {
         subject: '',
         message: ''
       });
+      setSubmitStatus("success");
     } catch (error) {
       setToastMessage({
         text: 'Failed to send message. Please try again later.',
@@ -62,8 +64,10 @@ const ContactUs: React.FC = () => {
       });
       setShowToast(true);
       console.error('Error sending email:', error);
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus("idle"), 3000);
     }
   };
 
@@ -105,83 +109,123 @@ const ContactUs: React.FC = () => {
           Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-2">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition"
-              required
-              disabled={isSubmitting}
-            />
+        <motion.form
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          onSubmit={handleSubmit}
+          className="space-y-6 bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10"
+        >
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-barlow font-medium text-white/70 mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-barlow font-medium text-white/70 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                placeholder="your@email.com"
+              />
+            </div>
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition"
-              required
-              disabled={isSubmitting}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="subject" className="block text-sm font-medium mb-2">
+            <label className="block text-sm font-barlow font-medium text-white/70 mb-2">
               Subject
             </label>
             <input
               type="text"
-              id="subject"
-              name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition"
               required
-              disabled={isSubmitting}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+              placeholder="How can we help?"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium mb-2">
+            <label className="block text-sm font-barlow font-medium text-white/70 mb-2">
               Message
             </label>
             <textarea
-              id="message"
-              name="message"
               value={formData.message}
               onChange={handleChange}
-              rows={6}
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition"
               required
-              disabled={isSubmitting}
+              rows={6}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+              placeholder="Tell us about your requirements..."
             />
           </div>
 
-          <div className="text-center">
-            <button
+          <div className="flex justify-center">
+            <motion.button
               type="submit"
               disabled={isSubmitting}
-              className={`bg-gradient-to-r from-[#5451FF] to-[#FF7878] text-white font-medium py-3 px-16 min-w-[240px] rounded-lg transition-all ${
-                isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:opacity-90'
-              }`}
+              className="relative px-8 py-4 bg-gradient-to-r from-[#5451FF] to-[#FF7878] rounded-lg font-barlow font-medium text-white overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
-            </button>
+              <motion.div
+                className="absolute inset-0 bg-white"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={isSubmitting ? { scale: 1, opacity: 0.2 } : { scale: 0, opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              />
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-[#FF7878] to-[#5451FF]"
+                initial={{ x: "100%" }}
+                animate={{ x: isSubmitting ? "0%" : "100%" }}
+                transition={{ duration: 1, repeat: isSubmitting ? Infinity : 0 }}
+              />
+              <span className="relative">
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </span>
+              <motion.div
+                className="absolute top-0 right-0 -mt-1 -mr-1 h-3 w-3"
+                initial={false}
+                animate={submitStatus === "success" ? { scale: [0, 1.2, 1], opacity: [0, 1, 0] } : {}}
+              >
+                <span className="block h-full w-full rounded-full bg-green-500" />
+              </motion.div>
+            </motion.button>
           </div>
-        </form>
+
+          {submitStatus === "success" && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center text-green-500 font-barlow font-medium"
+            >
+              Message sent successfully!
+            </motion.p>
+          )}
+
+          {submitStatus === "error" && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center text-red-500 font-barlow font-medium"
+            >
+              Failed to send message. Please try again.
+            </motion.p>
+          )}
+        </motion.form>
 
         <div className="mt-16 grid md:grid-cols-3 gap-8">
           <div className="text-center">
