@@ -102,7 +102,7 @@ const Home = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className="flex flex-col items-center"
+                    className="flex flex-col items-center h-full"
                   >
                     <motion.div
                       whileHover={{ 
@@ -111,13 +111,13 @@ const Home = () => {
                         backgroundColor: 'rgba(255,255,255,0.08)'
                       }}
                       transition={{ duration: 0.2 }}
-                      className="w-full p-6 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-200 group"
+                      className="w-full h-24 p-4 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-200 group"
                     >
-                      <h3 className="font-barlow font-bold text-lg md:text-xl text-white/90 group-hover:text-white transition-colors">
+                      <h3 className="font-barlow font-bold text-lg md:text-xl text-white/90 group-hover:text-white transition-colors text-center">
                         {client.name}
                       </h3>
                     </motion.div>
-                    <p className="mt-4 text-sm font-barlow text-white/50">
+                    <p className="mt-2 text-sm font-barlow text-white/50 text-center">
                       {client.industry}
                     </p>
                   </motion.div>

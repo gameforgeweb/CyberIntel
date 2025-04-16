@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import ContactUs from './pages/ContactUs';
 
 // Import VAPT Service Pages
 import WebAppSecurityTesting from './pages/services/WebAppSecurityTesting';
@@ -68,6 +69,7 @@ function App() {
             <Routes>
               {/* Main Route */}
               <Route path="/" element={<Home />} />
+              <Route path="/contact-us" element={<ContactUs />} />
 
               {/* VAPT Service Routes */}
               <Route path="/services/web-application-security-testing" element={<WebAppSecurityTesting />} />

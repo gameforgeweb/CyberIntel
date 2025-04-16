@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from './Logo';
 
 interface NavSubSection {
   title: string;
@@ -222,12 +223,14 @@ const Navbar = () => {
         <motion.div
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
+          className="flex items-center gap-3"
         >
           <Link 
             to="/" 
-            className="font-logo text-2xl text-white hover:text-white transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
           >
-            CYBERINTEL
+            <Logo size={32} />
+            <span className="font-logo text-2xl text-white">CYBERINTEL</span>
           </Link>
         </motion.div>
 
