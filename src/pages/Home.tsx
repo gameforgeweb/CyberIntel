@@ -295,47 +295,6 @@ const Home = () => {
             </motion.div>
           </div>
         </section>
-
-        {/* Footer */}
-        <footer className="py-12 bg-black/40 backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div>
-                <h3 className="font-logo text-xl text-white mb-6">CYBERINTEL</h3>
-                <p className="text-white/70">
-                  Advanced cybersecurity solutions for the modern enterprise.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-barlow font-bold text-white mb-4">Quick Links</h4>
-                <ul className="space-y-2">
-                  {["Home", "VAPT Services", "Compliance", "About Us", "Contact"].map(link => (
-                    <li key={link}>
-                      <a href="#" className="text-white/70 hover:text-white transition-colors">
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-barlow font-bold text-white mb-4">Services</h4>
-                <ul className="space-y-2">
-                  {["Security Testing", "Compliance", "Red Teaming", "Threat Modeling"].map(service => (
-                    <li key={service}>
-                      <a href="#" className="text-white/70 hover:text-white transition-colors">
-                        {service}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="pt-8 border-t border-white/10 text-center text-white/50">
-              © {new Date().getFullYear()} CyberIntel. All rights reserved.
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   );

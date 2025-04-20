@@ -37,10 +37,10 @@ const ContactUs: React.FC = () => {
       };
 
       await emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        'YOUR_SERVICE_ID',
+        'YOUR_TEMPLATE_ID',
         templateParams,
-        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+        'YOUR_PUBLIC_KEY'
       );
 
       setToastMessage({
@@ -49,7 +49,6 @@ const ContactUs: React.FC = () => {
       });
       setShowToast(true);
       
-      // Clear form
       setFormData({
         name: '',
         email: '',
@@ -125,6 +124,7 @@ const ContactUs: React.FC = () => {
                 type="text"
                 value={formData.name}
                 onChange={handleChange}
+                name="name"
                 required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 placeholder="Your name"
@@ -138,6 +138,7 @@ const ContactUs: React.FC = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
+                name="email"
                 required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 placeholder="your@email.com"
@@ -153,6 +154,7 @@ const ContactUs: React.FC = () => {
               type="text"
               value={formData.subject}
               onChange={handleChange}
+              name="subject"
               required
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
               placeholder="How can we help?"
@@ -166,6 +168,7 @@ const ContactUs: React.FC = () => {
             <textarea
               value={formData.message}
               onChange={handleChange}
+              name="message"
               required
               rows={6}
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
@@ -177,32 +180,37 @@ const ContactUs: React.FC = () => {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              className="relative px-8 py-4 bg-gradient-to-r from-[#5451FF] to-[#FF7878] rounded-lg font-barlow font-medium text-white overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+              className="relative px-8 py-4 bg-black rounded-lg font-barlow font-medium text-white overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
+              {/* Invisible border */}
+              <div className="absolute inset-0 rounded-lg border border-transparent" />
+
+              {/* Moving light effect */}
+              <div className="absolute inset-0 rounded-lg overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div 
+                  className="absolute w-[500%] h-[500%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:animate-[spin_3s_linear_infinite]"
+                >
+                  <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)]" />
+                  <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] blur-[2px]" />
+                  <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] blur-[4px] opacity-50" />
+                  <div className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] blur-[6px] opacity-30" />
+                </div>
+              </div>
+
+              <div className="absolute inset-[1px] rounded-lg bg-black" />
+
               <motion.div
                 className="absolute inset-0 bg-white"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={isSubmitting ? { scale: 1, opacity: 0.2 } : { scale: 0, opacity: 0 }}
                 transition={{ duration: 0.5 }}
               />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-[#FF7878] to-[#5451FF]"
-                initial={{ x: "100%" }}
-                animate={{ x: isSubmitting ? "0%" : "100%" }}
-                transition={{ duration: 1, repeat: isSubmitting ? Infinity : 0 }}
-              />
-              <span className="relative">
+
+              <span className="relative z-10">
                 {isSubmitting ? "Sending..." : "Send Message"}
               </span>
-              <motion.div
-                className="absolute top-0 right-0 -mt-1 -mr-1 h-3 w-3"
-                initial={false}
-                animate={submitStatus === "success" ? { scale: [0, 1.2, 1], opacity: [0, 1, 0] } : {}}
-              >
-                <span className="block h-full w-full rounded-full bg-green-500" />
-              </motion.div>
             </motion.button>
           </div>
 
@@ -257,4 +265,4 @@ const ContactUs: React.FC = () => {
   );
 };
 
-export default ContactUs; 
+export default ContactUs;
