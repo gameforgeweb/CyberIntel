@@ -118,7 +118,7 @@ const ContactUs: React.FC = () => {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-barlow font-medium text-white/70 mb-2">
-                Name
+                First and Last Name
               </label>
               <input
                 type="text"
@@ -127,7 +127,7 @@ const ContactUs: React.FC = () => {
                 name="name"
                 required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white font-barlow font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-                placeholder="Your name"
+                placeholder="Enter your full name"
               />
             </div>
             <div>
